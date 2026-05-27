@@ -85,7 +85,10 @@ public class StreamApiTasks {
 
     static List<Order> ordersAbove(List<Order> orders, double minValue) {
         // TODO: zadanie 2
-        return List.of();
+        return orders.stream()
+                .filter(order -> order.totalValue() > minValue)
+                .sorted(Comparator.comparing(Order::totalValue).reversed())
+                .toList();
     }
 
     static List<String> uniqueCustomerNames(List<Order> orders) {
