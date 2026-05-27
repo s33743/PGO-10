@@ -100,10 +100,17 @@ public class StreamApiTasks {
                 .toList();
     }
 
-    static List<String> soldProductNames(List<Order> orders) {
+     static List<String> soldProductNames(List<Order> orders) {
         // TODO: zadanie 4
-        return List.of();
+        return orders.stream()
+                .filter(order -> order.status != OrderStatus.CANCELLED)
+                .flatMap(order -> order.items.stream())
+                .map(i -> i.product.name)
+                .distinct()
+                .sorted()
+                .toList();
     }
+
 
     static double totalRevenue(List<Order> orders) {
         // TODO: zadanie 5
