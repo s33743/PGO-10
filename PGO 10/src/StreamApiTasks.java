@@ -93,7 +93,11 @@ public class StreamApiTasks {
 
     static List<String> uniqueCustomerNames(List<Order> orders) {
         // TODO: zadanie 3
-        return List.of();
+        return orders.stream()
+                .map(order -> order.customerName)
+                .distinct()
+                .sorted()
+                .toList();
     }
 
     static List<String> soldProductNames(List<Order> orders) {
