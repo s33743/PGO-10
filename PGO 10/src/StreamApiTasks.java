@@ -136,7 +136,10 @@ public class StreamApiTasks {
 
     static Map<String, Double> revenueByCategory(List<Order> orders) {
         // TODO: zadanie 8
-        return Map.of();
+        return orders.stream()
+                .filter(order -> order.status != OrderStatus.CANCELLED)
+                .flatMap(order -> order.items.stream())
+                .collect(Collectors.groupingBy(i -> i.product.category, Collectors.summingDouble(i -> i.totalPrice())));
     }
 
     static Map<String, Double> topCustomers(List<Order> orders, int limit) {
