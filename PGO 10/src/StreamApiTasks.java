@@ -153,12 +153,12 @@ public class StreamApiTasks {
                 .collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue,(a,b)-> a,LinkedHashMap::new));
     }
 
-    static Map<Boolean, List<Order>> partitionActiveOrdersByValue(List<Order> orders, double threshold) {
+    static Map<Boolean, Long> partitionActiveOrdersByValue(List<Order> orders, double threshold) {
         // TODO: zadanie 10
         return orders.stream()
                 .filter(order -> order.status != OrderStatus.CANCELLED)
-
-        return Map.of();
+                .collect(Collectors.partitioningBy(order -> order.totalValue() >= threshold, Collectors.counting()
+                ));
     }
 
     static Optional<Order> mostExpensiveDeliveredOrder(List<Order> orders) {
